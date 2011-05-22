@@ -26,16 +26,12 @@ DEALINGS IN THE SOFTWARE.
 
 package com.flassari.geom
 {
-	import flash.geom.Point;
 	import cmodule.AlchemyClipper.CLibInit;
+	
+	import flash.geom.Point;
 
 	public class Clipper
 	{
-		public static const INTERSECTION:int = 0;
-		public static const UNION:int = 1;
-		public static const DIFFERENCE:int = 2;
-		public static const XOR:int = 3;
-		
 		private static var _lib:Object;
 		
 		/**
@@ -45,9 +41,13 @@ package com.flassari.geom
 		 * @param subjectPolygon	An array of Point instances that make up the subject polygon.
 		 * @param clipPolygon		An array of Point instances that make up the clip polygon.
 		 * @param clipType			The clipping type operation to run.
+		 * @param subjectFillType	The fill type of the subject polygon.
+		 * @param clipFillType		The fill type of the clip polygon.
 		 * @return 					Returns an array of result polygons, which are arrays of Point instances.
 		 */
-		public static function clipPolygon(subjectPolygon:Array, clipPolygon:Array, clipType:int):Array {
+		public static function clipPolygon(subjectPolygon:Array, clipPolygon:Array, clipType:int,
+										   subjectFillType:int = PolyFillType.EVEN_ODD, clipFillType:int = PolyFillType.EVEN_ODD):Array
+		{
 			var subjectVertices:Array = new Array();
 			var clipVertices:Array = new Array();
 			
