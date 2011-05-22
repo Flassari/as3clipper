@@ -22,12 +22,14 @@ static AS3_Val clipPolygon(void* self, AS3_Val args) {
 
 	AS3_Val asSubjectVertices;
 	AS3_Val asClipVertices;
-	int subjectVerticeCount, clipVerticeCount, clipTypeArg;
-	// Get the function arguments (subjectVertices:Array, subjectVerticeCount:int, extractVertices:Array, extractVerticeCount:int, clipType:int)
+	int subjectVerticeCount, clipVerticeCount, clipTypeArg, subjectFillTypeArg, clipFillTypeArg;
+	// Get the function arguments (subjectVertices:Array, subjectVerticeCount:int, extractVertices:Array,
+	//	extractVerticeCount:int, clipType:int, subjectFillType:int, clipFillType:int)
 	AS3_ArrayValue(
 			args,
-			"AS3ValType, IntType, AS3ValType, IntType, IntType",
-			&asSubjectVertices, &subjectVerticeCount, &asClipVertices, &clipVerticeCount, &clipTypeArg
+			"AS3ValType, IntType, AS3ValType, IntType, IntType, IntType, IntType",
+			&asSubjectVertices, &subjectVerticeCount, &asClipVertices, &clipVerticeCount,
+			&clipTypeArg, &subjectFillTypeArg, &clipFillTypeArg
 	);
 
 	Polygon subjectPolygon(subjectVerticeCount / 2), clipPolygon(clipVerticeCount / 2);
@@ -54,17 +56,31 @@ static AS3_Val clipPolygon(void* self, AS3_Val args) {
 
 	ClipType clipType;
 	switch (clipTypeArg) {
+		default:
 		case 0: clipType = ctIntersection; break;
 		case 1: clipType = ctUnion; break;
 		case 2: clipType = ctDifference; break;
 		case 3: clipType = ctXor; break;
-		default: clipType = ctIntersection; break;
 	}
+
+	PolyFillType subjectFillType, clipFillType;
+	switch (subjectFillTypeArg) {
+		default:
+		case 0: subjectFillType = pftEvenOdd; break;
+		case 1: subjectFillType = pftNonZero; break;
+	}
+	switch (clipFillTypeArg) {
+		default:
+		case 0: clipFillType = pftEvenOdd; break;
+		case 1: clipFillType = pftNonZero; break;
+	}
+
+
 
 	Clipper c;
 	c.AddPolygon(subjectPolygon, ptSubject);
 	c.AddPolygon(clipPolygon, ptClip);
-	if (c.Execute(clipType, solution)) {
+	if (c.Execute(clipType, solution, subjectFillType, clipFillType)) {
 		for (int i = 0; i < (int)solution.size(); i++) {
 			// Create a new AS3 array
 			AS3_Val verticeArray = AS3_Array("");

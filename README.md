@@ -8,10 +8,11 @@ Clipper version in this release: 4.2.8
 ## Usage
 
 	import com.flassari.geom.Clipper;
+	import com.flassari.geom.ClipType;
 	
 	var subjectPolygon:Array = [new Point(0, 0), new Point(200, 0), new Point(100, 200)];
 	var clipPolygon:Array = [new Point(0, 100), new Point(200, 100), new Point(300, 200)];
-	var resultPolygons:Array = Clipper.clipPolygon(subjectPolygon, clipPolygon, Clipper.DIFFERENCE);
+	var resultPolygons:Array = Clipper.clipPolygon(subjectPolygon, clipPolygon, ClipType.DIFFERENCE);
 
 ## License
 
