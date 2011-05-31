@@ -54,10 +54,10 @@ package com.flassari.geom
 			// Flatten the point arrays 
 			var point:Point;
 			for each (point in subjectPolygon) {
-				subjectVertices.push(point.x as int, point.y as int);
+				subjectVertices.push(Math.round(point.x) as int, Math.round(point.y) as int);
 			}
 			for each (point in clipPolygon) {
-				clipVertices.push(point.x as int, point.y as int);
+				clipVertices.push(Math.round(point.x) as int, Math.round(point.y) as int);
 			}
 			
 			// Only initialize the alchemy library once
