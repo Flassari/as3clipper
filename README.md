@@ -1,7 +1,7 @@
 # AS3 Clipper
 
 Alchemy wrapper of Angus Johnson's Polygon clipping library.
-Clipper version in this release: 4.2.8
+Clipper version in this release: 4.3.0
 
 * [Clipper Homepage](http://angusj.com/delphi/clipper.php)
 
